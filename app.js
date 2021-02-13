@@ -42,6 +42,7 @@ const getImages = (query) => {
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
     
+
 }
 
 let slideIndex = 0;
@@ -53,7 +54,8 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    sliders.splice(item, 1); //...............................................
+    element.classList.remove('added');
   }
 }
 var timer
