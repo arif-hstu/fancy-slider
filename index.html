@@ -35,7 +35,7 @@
 
       <!-- spinner -->
       <div class="d-flex justify-content-center mt-5 spinner-holder">
-        <div class="spinner-grow d-none" id="spinner" role="status">
+        <div class="spinner-grow bg-primary d-none" id="spinner" role="status">
           <span class="sr-only">Loading...</span>
         </div>
       </div>
@@ -53,9 +53,11 @@
         <div class="d-flex justify-content-center mt-4 mb-5">
           <button type="button" onclick="downloadAndZip();" class="btn btn-success px-5">Download as ZIP</button>
         </div>
-        <!-- dynamic progress-bar -->
+
+        <!-- downloading spinner -->
         <div id="download-spinner" class="download-spinner mx-auto text-center mt-0 d-none">
           <div><img src="images/loading.gif" alt="Downloading..."></div>
+          <div><p class="downloading-info">Downloading Images! Please Wait...</p></div>
         </div>
       
         <!-- dynamic slider section -->

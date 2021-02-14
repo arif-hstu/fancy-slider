@@ -1,9 +1,15 @@
-// detect enter key press to search the image
-  document.getElementById('search').addEventListener("keyup", function(e) {
+// detect enter key press to submit data
+const clickOnKeypress = (inputId, buttonId) => {
+  document.getElementById(inputId).addEventListener("keyup", function(e) {
     if (e.code === 'Enter') {
-      document.getElementById("search-btn").click();
+      document.getElementById(buttonId).click();
     }
   });
+}
+
+// call the functions to detect enter key press
+clickOnKeypress('search', 'search-btn');
+clickOnKeypress('duration', 'create-slider');
 
 const imagesArea = document.querySelector('.images');
 const gallery = document.querySelector('.gallery');
@@ -104,7 +110,6 @@ const createSlider = () => {
   // hide image area
   imagesArea.style.display = 'none';
 
- 
   sliders.forEach(slide => {
     let item = document.createElement('div');
     item.className = "slider-item";
@@ -112,8 +117,8 @@ const createSlider = () => {
     src="${slide}"
     alt="">`;
     sliderContainer.appendChild(item);
-
   })
+
   changeSlide(0)
   timer = setInterval(function () {
     slideIndex++;
@@ -126,24 +131,20 @@ const changeItem = index => {
   changeSlide(slideIndex += index);
 }
 
-// change slide item
+// change slide items
 const changeSlide = (index) => {
-
   const items = document.querySelectorAll('.slider-item');
   if (index < 0) {
     slideIndex = items.length - 1
     index = slideIndex;
   };
-
   if (index >= items.length) {
     index = 0;
     slideIndex = 0;
   }
-
   items.forEach(item => {
     item.style.display = "none"
   })
-
   items[index].style.display = "block"
 }
 
