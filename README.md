@@ -1,9 +1,7 @@
 # Fancy Slider
 ----------------
 [Click Here](https://arif-hstu.github.io/fancy-slider/index.html) to check the Live Site
-----------------
-
-
+-----------------
+_______________________________________________
 ## Status
-_____________________
-![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)
+![](https://img.shields.io/github/issues/arif-hstu/fancy-slider) ![](https://img.shields.io/github/forks/arif-hstu/fancy-slider) ![](https://img.shields.io/github/stars/arif-hstu/fancy-slider)
