@@ -1,6 +1,5 @@
-// detect enter key press to search the image....................................
-document.getElementById("search")
-  .addEventListener("keyup", function(e) {
+// detect enter key press to search the image
+  document.getElementById('search').addEventListener("keyup", function(e) {
     if (e.code === 'Enter') {
       document.getElementById("search-btn").click();
     }
@@ -12,7 +11,7 @@ const galleryHeader = document.querySelector('.gallery-header');
 const searchBtn = document.getElementById('search-btn');
 const sliderBtn = document.getElementById('create-slider');
 const sliderContainer = document.getElementById('sliders');
-// selected image 
+// selected images
 let sliders = [];
 
 
@@ -33,22 +32,24 @@ const showImages = (images) => {
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
   })
-  // call the toggleSpinner function.................
+  // call the toggleSpinner function
   toggleSpinner('spinner');
 }
 
 const getImages = (query) => {
-  // call toggleSpinner function and clear the searched items...................
+  // call toggleSpinner function and clear the searched items
   toggleSpinner('spinner');
   gallery.innerHTML = '';
 
+  // search items
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
 
 }
-// spinner ....................................................
+
+// call the toggleSpinner function
 const toggleSpinner = (id) => {
   const spinner = document.getElementById(id);
   spinner.classList.toggle('d-none');
@@ -64,7 +65,7 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    sliders.splice(item, 1); //...............................................
+    sliders.splice(item, 1);
     element.classList.remove('added');
   }
 }
@@ -77,7 +78,7 @@ const createSlider = () => {
     return;
   }
 
-  // check and set the duration value................................................
+  // check and set the duration value
   const durationId = document.getElementById('duration');
   let duration = durationId.value || 1000;
   if (duration < 0){
@@ -163,12 +164,11 @@ sliderBtn.addEventListener('click', function () {
 })
 
 // creating zip file of selected images by JSZip
-// download signle image..................................................
 const download = (url) => {
   return fetch(url).then(res => res.blob());
 }
 
-
+// download group of images
 const downloadByGroup = (urls, files_per_group=5) => {
   return Promise.map(
     urls, 
@@ -179,7 +179,7 @@ const downloadByGroup = (urls, files_per_group=5) => {
   );
 }
 
-
+// export zip file
 const exportZip = blobs => {
   const zip = JSZip();
   blobs.forEach((blob, i) => {
@@ -192,6 +192,7 @@ const exportZip = blobs => {
   });
 }
 
+// download images and zip them
 const downloadAndZip = () => {
   return downloadByGroup(sliders, 5).then(exportZip);
 }
