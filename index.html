@@ -32,23 +32,47 @@
         </div>
         <button id="create-slider" class="btn btn-primary px-5">Create slider</button>
       </div>
+      <!-- spinner....................................... -->
+      <div class="d-flex justify-content-center mt-5 spinner-holder">
+        <div class="spinner-grow d-none" id="spinner" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+      <!-- row gallery -->
       <div class="row gallery">
 
       </div>
     </section>
-    <!-- slider -->
-    <div class="main">
-      <section class="mt-5" id="sliders">
 
-      </section>
-      <div class="dots d-flex mt-2 w-100 justify-content-center align-items-center bg-light">
-        <span class="dot" onclick="changeItem(-1)"></span>
-        <span class="dot" onclick="changeItem(1)"></span>
+    <!-- slider -->
+    <div>
+      <div class="main">
+        <!-- download button -->
+        <div class="d-flex justify-content-center mt-4 mb-5">
+          <button onclick="downloadAndZip();" class="btn-success">Download</button>
+        </div>
+      
+        <section class="mt-5" id="sliders">
+  
+        </section>
+  
+        <div class="dots d-flex mt-2 w-100 justify-content-center align-items-center bg-light">
+          <span class="dot" onclick="changeItem(-1)"></span>
+          <span class="dot" onclick="changeItem(1)"></span>
+        </div>
+
+
       </div>
     </div>
   </div>
   <!-- Optional JavaScript -->
-  <script src="./app.js"></script>
+  <script src="vendor/FileSaver.js"></script>
+  <script src="dist/jszip.js"></script>
+  <script src="dist/bluebird.min.js"></script>
+  <script src="dist/app.js"></script>
+
+
 </body>
 
 </html>

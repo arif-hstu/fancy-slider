@@ -33,17 +33,27 @@ const showImages = (images) => {
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
   })
-
+  // call the toggleSpinner function.................
+  toggleSpinner('spinner');
 }
 
 const getImages = (query) => {
+  // call toggleSpinner function and clear the searched items...................
+  toggleSpinner('spinner');
+  gallery.innerHTML = '';
+
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
-    
 
 }
+// spinner ....................................................
+const toggleSpinner = (id) => {
+  const spinner = document.getElementById(id);
+  spinner.classList.toggle('d-none');
+}
+
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
@@ -60,20 +70,24 @@ const selectItem = (event, img) => {
 }
 var timer
 const createSlider = () => {
+
   // check slider image length
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
     return;
   }
 
-  // check the duration value................................................
+  // check and set the duration value................................................
   const durationId = document.getElementById('duration');
-  const duration = durationId.value || 1000;
-  if (duration < 0 || duration <= 250){
-    alert("Sorry! I cann't Play So Fast!!");
-    return;
+  let duration = durationId.value || 1000;
+  if (duration < 0){
+    duration = -duration;
   }
   
+  if (duration < 1000){
+    duration = 1000;
+  }
+
 
   // crate slider previous next area
   sliderContainer.innerHTML = '';
@@ -86,7 +100,7 @@ const createSlider = () => {
 
   sliderContainer.appendChild(prevNext)
   document.querySelector('.main').style.display = 'block';
-  // hide image aria
+  // hide image area
   imagesArea.style.display = 'none';
 
  
@@ -96,7 +110,8 @@ const createSlider = () => {
     item.innerHTML = `<img class="w-100"
     src="${slide}"
     alt="">`;
-    sliderContainer.appendChild(item)
+    sliderContainer.appendChild(item);
+
   })
   changeSlide(0)
   timer = setInterval(function () {
@@ -144,5 +159,39 @@ searchBtn.addEventListener('click', function(){
 });
 
 sliderBtn.addEventListener('click', function () {
-  createSlider()
+  createSlider();
 })
+
+// creating zip file of selected images by JSZip
+// download signle image..................................................
+const download = (url) => {
+  return fetch(url).then(res => res.blob());
+}
+
+
+const downloadByGroup = (urls, files_per_group=5) => {
+  return Promise.map(
+    urls, 
+    async url => {
+      return await download(url);
+    },
+    {concurrency: files_per_group}
+  );
+}
+
+
+const exportZip = blobs => {
+  const zip = JSZip();
+  blobs.forEach((blob, i) => {
+    zip.file(`file-${i}.jpg`, blob);
+  });
+  zip.generateAsync({type: 'blob'}).then(zipFile => {
+    const currentDate = new Date().getTime();
+    const fileName = `Fancy-Sliders-${currentDate}.zip`;
+    return saveAs(zipFile, fileName);
+  });
+}
+
+const downloadAndZip = () => {
+  return downloadByGroup(sliders, 5).then(exportZip);
+}
