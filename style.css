@@ -28,6 +28,14 @@ img {
   object-fit: cover;
 }
 
+.download-spinner {
+  width: 50%;
+}
+.download-spinner img{
+  width: 20%;
+  height: 5%;
+}
+
 .prev-next {
   position: absolute;
   top: 50%;

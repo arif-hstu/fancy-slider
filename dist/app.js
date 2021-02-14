@@ -188,11 +188,14 @@ const exportZip = blobs => {
   zip.generateAsync({type: 'blob'}).then(zipFile => {
     const currentDate = new Date().getTime();
     const fileName = `Fancy-Sliders-${currentDate}.zip`;
+    toggleSpinner('download-spinner');
     return saveAs(zipFile, fileName);
+
   });
 }
 
 // download images and zip them
 const downloadAndZip = () => {
+  toggleSpinner('download-spinner');
   return downloadByGroup(sliders, 5).then(exportZip);
 }
